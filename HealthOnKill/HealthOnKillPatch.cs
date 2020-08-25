@@ -18,7 +18,7 @@ namespace HealthOnKill
         {
             if (attachedAgent != null)
             {
-                if (attachedAgent.IsMount && HealthOnKillSettings.Instance.MountProjectiles)
+                if (attachedAgent.IsMount && HealthOnKillSettings.Instance.MountProjectiles && attachedAgent.RiderAgent != null)
                 {
                     if ((attachedAgent.RiderAgent.IsMainAgent && HealthOnKillSettings.Instance.MainProjectiles ||
                         (attachedAgent.RiderAgent.IsHero && HealthOnKillSettings.Instance.HeroProjectiles) ||
@@ -42,7 +42,7 @@ namespace HealthOnKill
         [HarmonyPatch("RegisterBlow")]
         private static bool Prefix2(Agent attacker, Agent victim, GameEntity realHitEntity, ref Blow b, ref AttackCollisionData collisionData)
         {
-            if (attacker == null || victim == null) return;
+            if (attacker == null || victim == null) return true;
             if (attacker.IsMainAgent)
                 b.InflictedDamage *= HealthOnKillSettings.Instance.DPlayerMultiplier;
             else if (attacker.IsHero)
@@ -54,7 +54,7 @@ namespace HealthOnKill
                 b.InflictedDamage *= HealthOnKillSettings.Instance.DAIMultiplier;
             if (b.IsMissile())
             {
-                if (victim.IsMount && HealthOnKillSettings.Instance.MountProjectiles)
+                if (victim.IsMount && HealthOnKillSettings.Instance.MountProjectiles && victim.RiderAgent != null)
                 {
                     if ((victim.RiderAgent.IsMainAgent && HealthOnKillSettings.Instance.MainProjectiles ||
                         (victim.RiderAgent.IsHero && HealthOnKillSettings.Instance.HeroProjectiles) ||
