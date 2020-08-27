@@ -83,7 +83,7 @@ namespace HealthOnKill
 		public bool AIProjectiles { get; set; } = false;
 		[XmlElement]
 		[SettingProperty("Projectiles don't damage Mounts", "Projectiles will not damage or stick to Mounts whose riders aren't damaged by projectiles with this enabled")]
-		public bool MountProjectiles { get; set; } = true;
+		public bool MountProjectiles { get; set; } = false;
 
 		public const string InstanceID = "HealthOnKillSettings";
 	}
