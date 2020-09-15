@@ -1,0 +1,8 @@
+C:\Users\chujo\Documents\HealthOnKill\HeroicHeroes\HealthOnKill\obj\x64\Release\HeroicHeroes.csproj.CoreCompileInputs.cache
+C:\Users\chujo\Documents\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\HealthOnKill\bin\Win64_Shipping_Client\HeroicHeroes.dll
+C:\Users\chujo\Documents\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\HealthOnKill\bin\Win64_Shipping_Client\HeroicHeroes.pdb
+C:\Users\chujo\Documents\HealthOnKill\HeroicHeroes\HealthOnKill\obj\x64\Release\HeroicHeroes.csproj.CopyComplete
+C:\Users\chujo\Documents\HealthOnKill\HeroicHeroes\HealthOnKill\obj\x64\Release\HeroicHeroes.dll
+C:\Users\chujo\Documents\HealthOnKill\HeroicHeroes\HealthOnKill\obj\x64\Release\HeroicHeroes.pdb
+C:\Users\chujo\Documents\HealthOnKill\Release\HeroicHeroes\bin\Win64_Shipping_Client\HeroicHeroes.dll
+C:\Users\chujo\Documents\HealthOnKill\Release\HeroicHeroes\bin\Win64_Shipping_Client\HeroicHeroes.pdb

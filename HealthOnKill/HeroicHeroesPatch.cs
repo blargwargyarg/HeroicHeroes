@@ -25,8 +25,12 @@ namespace HeroicHeroes
                                 if ((victimAgent.RiderAgent.IsMainAgent && HeroicHeroesSettings.Instance.SPlayerMultiplier > 1 ||
                                     (victimAgent.RiderAgent.IsHero && HeroicHeroesSettings.Instance.SHeroMultiplier > 1) ||
                                     HeroicHeroesSettings.Instance.SAIMultiplier > 1) &&
-                                    checkFriendly(HeroicHeroesSettings.Instance.FriendlyProjectiles, victimAgent.RiderAgent)
-                                    ) return false;
+                                    checkFriendly(HeroicHeroesSettings.Instance.SFriendlyOnly, victimAgent.RiderAgent)
+                                    )
+                                {
+                                    __result = HeroicHeroesSettings.Instance.SPlayerMultiplier * MissionGameModels.Current.AgentApplyDamageModel.CalculateStaggerThresholdMultiplier(victimAgent);
+                                    return false;
+                                }
                     }
                     else if (victimAgent.IsMainAgent)
                     {
@@ -40,11 +44,11 @@ namespace HeroicHeroes
                             __result = HeroicHeroesSettings.Instance.SHeroMultiplier * MissionGameModels.Current.AgentApplyDamageModel.CalculateStaggerThresholdMultiplier(victimAgent);
                             return false;
                         }
-                        else if (true && checkFriendly(HeroicHeroesSettings.Instance.SFriendlyOnly, victimAgent))
-                        {
-                            __result = HeroicHeroesSettings.Instance.SAIMultiplier * MissionGameModels.Current.AgentApplyDamageModel.CalculateStaggerThresholdMultiplier(victimAgent);
-                            return false;
-                        }
+                    }
+                    else if (checkFriendly(HeroicHeroesSettings.Instance.SFriendlyOnly, victimAgent))
+                    {
+                        __result = HeroicHeroesSettings.Instance.SAIMultiplier * MissionGameModels.Current.AgentApplyDamageModel.CalculateStaggerThresholdMultiplier(victimAgent);
+                        return false;
                     }
                 }
             }
@@ -62,8 +66,8 @@ namespace HeroicHeroes
         {
             try
             {
-                if (attachedAgent != null && attackerAgent != null && 
-                    (!HeroicHeroesSettings.Instance.HeroProjectilesExemption || (attackerAgent.IsHuman && attackerAgent.IsHero)))
+                if (attachedAgent != null && attackerAgent != null &&
+                    (!HeroicHeroesSettings.Instance.HeroProjectilesExemption || (attackerAgent.IsHuman && !attackerAgent.IsHero)))
                 {
                     if (attachedAgent.IsMount)
                     {
@@ -77,7 +81,7 @@ namespace HeroicHeroes
                     }
                     else if (attachedAgent.IsMainAgent)
                     {
-                        if (HeroicHeroesSettings.Instance.MainProjectiles || HeroicHeroesSettings.Instance.MainStick)
+                        if (HeroicHeroesSettings.Instance.MainProjectiles)
                             collisionReaction = Mission.MissileCollisionReaction.BecomeInvisible;
                     }
                     else if (attachedAgent.IsHero)
@@ -105,45 +109,56 @@ namespace HeroicHeroes
             {
                 if (attacker == null || victim == null) return true;
                 if (!(!collisionData.AttackBlockedWithShield && b.SelfInflictedDamage < 0 && attacker.IsEnemyOf(victim))) return true;
-                if (!HeroicHeroesSettings.Instance.DHeroExemption || (victim.IsHuman && victim.IsHero))
+                if (!HeroicHeroesSettings.Instance.DHeroExemption || (victim.IsHuman && !victim.IsHero))
+                {
+                    float dam = b.InflictedDamage;
                     if (attacker.IsMainAgent)
-                    {
-                        collisionData.InflictedDamage *= HeroicHeroesSettings.Instance.DPlayerMultiplier;
-                        b.InflictedDamage *= HeroicHeroesSettings.Instance.DPlayerMultiplier;
-                    }
+                        dam *= HeroicHeroesSettings.Instance.DPlayerMultiplier;
                     else if (attacker.IsHero)
                     {
                         if (checkFriendly(HeroicHeroesSettings.Instance.FriendlyOnly, attacker))
-                            b.InflictedDamage *= HeroicHeroesSettings.Instance.DHeroMultiplier;
+                            dam *= HeroicHeroesSettings.Instance.DHeroMultiplier;
                     }
                     else if (checkFriendly(HeroicHeroesSettings.Instance.FriendlyOnly, attacker))
-                        b.InflictedDamage *= HeroicHeroesSettings.Instance.DAIMultiplier;
+                        dam *= HeroicHeroesSettings.Instance.DAIMultiplier;
+                    collisionData.InflictedDamage = (int)dam;
+                    b.InflictedDamage = (int)dam;
+                }
                 if (b.IsMissile())
                 {
-                    if (!HeroicHeroesSettings.Instance.HeroProjectilesExemption || (attacker.IsHuman && attacker.IsHero))
+                    if (!HeroicHeroesSettings.Instance.HeroProjectilesExemption || (attacker.IsHuman && !attacker.IsHero))
+                    {
+                        float dam = b.InflictedDamage;
                         if (victim.IsMount)
                         {
                             if (HeroicHeroesSettings.Instance.MountProjectiles)
                                 if (victim.RiderAgent != null)
-                                    if ((victim.RiderAgent.IsMainAgent && HeroicHeroesSettings.Instance.MainProjectiles ||
-                                        (victim.RiderAgent.IsHero && HeroicHeroesSettings.Instance.HeroProjectiles) ||
-                                        HeroicHeroesSettings.Instance.AIProjectiles) &&
+                                    if ((victim.RiderAgent.IsMainAgent && HeroicHeroesSettings.Instance.PPlayerMultiplier < 1 ||
+                                        (victim.RiderAgent.IsHero && HeroicHeroesSettings.Instance.PHeroMultiplier < 1) ||
+                                        HeroicHeroesSettings.Instance.PAIMultiplier < 1) &&
                                         checkFriendly(HeroicHeroesSettings.Instance.FriendlyProjectiles, victim.RiderAgent)
-                                        ) return false;
+                                        ) dam *=HeroicHeroesSettings.Instance.PMountMultiplier;
                         }
                         else if (victim.IsMainAgent)
                         {
                             if (HeroicHeroesSettings.Instance.MainProjectiles)
-                                return false;
+                                dam *= HeroicHeroesSettings.Instance.PPlayerMultiplier;
                         }
                         else if (victim.IsHero)
                         {
                             if (HeroicHeroesSettings.Instance.HeroProjectiles)
                                 if (checkFriendly(HeroicHeroesSettings.Instance.FriendlyProjectiles, victim))
-                                    return false;
+                                    dam *= HeroicHeroesSettings.Instance.PHeroMultiplier;
                         }
                         else if (HeroicHeroesSettings.Instance.AIProjectiles && checkFriendly(HeroicHeroesSettings.Instance.FriendlyProjectiles, victim))
-                            return false;
+                            dam *= HeroicHeroesSettings.Instance.PAIMultiplier;
+                        if ((int)dam == 0) return false;
+                        else
+                        {
+                            b.InflictedDamage = (int)dam;
+                            collisionData.InflictedDamage = (int)dam;
+                        }
+                    }
                 }
             }
             catch (Exception arg)

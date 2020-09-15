@@ -37,9 +37,6 @@ namespace HeroicHeroes
 			}
 		}
 		[XmlElement]
-		[SettingProperty("Projectiles don't show on Player", "Projectiles will stick to player with this enabled")]
-		public bool MainStick { get; set; } = true;
-		[XmlElement]
 		[SettingProperty("Health on Kill Base Amount", 1f, 20f, "The base amount of health gained on kill.")]
 		public float HealthOnKillAmount { get; set; } = 8f;
         [XmlElement]
@@ -58,14 +55,14 @@ namespace HeroicHeroes
         [SettingProperty("Health on Kill For Only Friendly troops", "With this enabled only friendly troops will heal on kills")]
         public bool FriendlyOnly { get; set; } = false;
 		[XmlElement]
-		[SettingProperty("Damage Multiplier for Player", 1, 10, "Multiplies damage dealt by player.")]
-		public int DPlayerMultiplier { get; set; } = 1;
+		[SettingProperty("Damage Multiplier for Player", 0, 10, "Multiplies damage dealt by player.")]
+		public float DPlayerMultiplier { get; set; } = 1;
 		[XmlElement]
-		[SettingProperty("Damage Multiplier for Heroes", 1, 10, "Multiplies damage dealt by heroes .")]
-		public int DHeroMultiplier { get; set; } = 1;
+		[SettingProperty("Damage Multiplier for Heroes", 0, 10, "Multiplies damage dealt by heroes .")]
+		public float DHeroMultiplier { get; set; } = 1;
 		[XmlElement]
-		[SettingProperty("Damage Multiplier for AI", 1, 10, "Multiplies damage dealt by AI")]
-		public int DAIMultiplier { get; set; } = 1;
+		[SettingProperty("Damage Multiplier for AI", 0, 10, "Multiplies damage dealt by AI")]
+		public float DAIMultiplier { get; set; } = 1;
 		[XmlElement]
 		[SettingProperty("Damage Multiplier Hero Exemption", "Heroes are exempt from additional damage multipliers")]
 		public bool DHeroExemption { get; set; } = true;
@@ -88,22 +85,34 @@ namespace HeroicHeroes
 		[SettingProperty("Stagger Threshold Multiplier Only For Friendly troops", "With this enabled only friendly troops will multiply damage dealt")]
 		public bool SFriendlyOnly { get; set; } = false;
 		[XmlElement]
-		[SettingProperty("Projectiles don't damage For Only Friendly troops", "With this enabled only friendly troops will not be damaged from projectiles")]
+		[SettingProperty("Projectiles Damaging Multiplier For Only Friendly troops", "With this enabled only friendly troops will be affected by projectile damaging multipliers and visual sticking")]
 		public bool FriendlyProjectiles { get; set; } = false;
 		[XmlElement]
-		[SettingProperty("Projectiles don't damage setting for Player", "Projectiles will not damage or stick to player with this enabled")]
+		[SettingProperty("Projectiles don't stick to Player", "Projectiles will not stick to player with this enabled")]
 		public bool MainProjectiles{ get; set; } = true;
 		[XmlElement]
-		[SettingProperty("Projectiles don't damage setting for Heroes", "Projectiles will not damage or stick to heroes with this enabled")]
+		[SettingProperty("Projectiles don't stick to Heroes", "Projectiles will not stick to heroes with this enabled")]
 		public bool HeroProjectiles { get; set; } = true;
 		[XmlElement]
-		[SettingProperty("Projectiles don't damage setting for AI", "Projectiles will not damage or stick to AI with this enabled")]
+		[SettingProperty("Projectiles don't stick to AI", "Projectiles will not stick to AI with this enabled")]
 		public bool AIProjectiles { get; set; } = false;
 		[XmlElement]
 		[SettingProperty("Projectiles don't damage Mounts", "Projectiles will not damage or stick to Mounts whose riders aren't damaged by projectiles with this enabled")]
 		public bool MountProjectiles { get; set; } = false;
 		[XmlElement]
-		[SettingProperty("Projectiles don't damage Hero exemption", "Heroes-fired projectiles will damage the target")]
+		[SettingProperty("Projectile Damaging Multiplier for Player", 0f, 1f, "Multiplies damage projectiles do to player.")]
+		public float PPlayerMultiplier { get; set; } = 1f;
+		[XmlElement]
+		[SettingProperty("Projectile Damaging Multiplier for Heores", 0f, 1f, "Multiplies damage projectiles do to heroes .")]
+		public float PHeroMultiplier { get; set; } = 1f;
+		[XmlElement]
+		[SettingProperty("Projectile Damaging Multiplier for AI", 0f, 1f, "Multiplies damage projectiles do to AI")]
+		public float PAIMultiplier { get; set; } = 1f;
+		[XmlElement]
+		[SettingProperty("Projectile Damaging Multiplier for Mounts", 0f, 1f, "Multiplies damage projectiles do to mount (only applies to characters with less than 1 multiplier)")]
+		public float PMountMultiplier { get; set; } = 1f;
+		[XmlElement]
+		[SettingProperty("Projectiles don't damage Hero exemption", "Heroes-fired projectiles will damage and stick to the target")]
 		public bool HeroProjectilesExemption { get; set; } = true;
 
 
