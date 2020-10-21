@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,15 @@ namespace HeroicHeroes
     {
         protected override void OnSubModuleLoad()
         {
-            base.OnSubModuleLoad();
-            new Harmony("blargwarg.heroicheroes").PatchAll();
+            try
+            {
+                base.OnSubModuleLoad();
+                new Harmony("blargwarg.heroicheroes").PatchAll();
+            }
+            catch (Exception arg)
+            {
+                MessageBox.Show(string.Format("Failed to initialize Heroic heroes:\n\n{0}", arg));
+            }
         }
     }
 }

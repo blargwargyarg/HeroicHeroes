@@ -124,7 +124,7 @@ namespace HeroicHeroes
                     collisionData.InflictedDamage = (int)dam;
                     b.InflictedDamage = (int)dam;
                 }
-                if (b.IsMissile())
+                if (b.IsMissile)
                 {
                     if (!HeroicHeroesSettings.Instance.HeroProjectilesExemption || (attacker.IsHuman && !attacker.IsHero))
                     {
