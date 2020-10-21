@@ -114,7 +114,9 @@ namespace HeroicHeroes
 		[XmlElement]
 		[SettingProperty("Projectiles don't damage Hero exemption", "Heroes-fired projectiles will damage and stick to the target")]
 		public bool HeroProjectilesExemption { get; set; } = true;
-
+		[XmlElement]
+		[SettingProperty("Show Error Messages", "Shows error messages. Otherwise ignores errors")]
+		public bool showError { get; set; } = false;
 
 		public const string InstanceID = "HeroicHeroesSettings";
 	}

@@ -54,7 +54,7 @@ namespace HeroicHeroes
             }
             catch (Exception arg)
             {
-                MessageBox.Show(string.Format("Error with GetStaggerThresholdMultiplier:\n\n{0}", arg));
+                if(HeroicHeroesSettings.Instance.showError)MessageBox.Show(string.Format("Error with GetStaggerThresholdMultiplier:\n\n{0}", arg));
             }
             return true;
         }
@@ -97,7 +97,7 @@ namespace HeroicHeroes
             }
             catch (Exception arg)
             {
-                MessageBox.Show(string.Format("Error with HandleMissileCollisionReaction:\n\n{0}", arg));
+                if (HeroicHeroesSettings.Instance.showError) MessageBox.Show(string.Format("Error with HandleMissileCollisionReaction:\n\n{0}", arg));
             }
             return true;
         }
@@ -163,7 +163,7 @@ namespace HeroicHeroes
             }
             catch (Exception arg)
             {
-                MessageBox.Show(string.Format("Error with RegisterBlow Prefix:\n\n{0}", arg));
+                if (HeroicHeroesSettings.Instance.showError) MessageBox.Show(string.Format("Error with RegisterBlow Prefix:\n\n{0}", arg));
             }
             return true;
         }
@@ -203,7 +203,7 @@ namespace HeroicHeroes
             }
             catch (Exception arg)
             {
-                MessageBox.Show(string.Format("Error with RegisterBlow Postfix:\n\n{0}", arg));
+                if (HeroicHeroesSettings.Instance.showError) MessageBox.Show(string.Format("Error with RegisterBlow Postfix:\n\n{0}", arg));
             }
 
         }
